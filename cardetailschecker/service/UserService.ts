@@ -1,4 +1,3 @@
-import axios from "axios";
 import { axiosInstance } from "../api/Api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -27,8 +26,8 @@ export interface UserResponse {
 }
 
 export const loginUser = (credentials: LoginRequest) => {
-  axios
-    .post<UserResponse>("http://10.40.16.98:3000/login", {
+  axiosInstance
+    .post<UserResponse>("/login", {
       email: credentials.email,
       password: credentials.password,
     })

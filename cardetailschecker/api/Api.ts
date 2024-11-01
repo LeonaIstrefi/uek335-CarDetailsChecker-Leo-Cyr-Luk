@@ -5,8 +5,15 @@ export const axiosInstance = axios.create({
   baseURL: "http://localhost:3000",
 });
 
-axiosInstance.interceptors.request.use(async (config) => {
-  const token = await AsyncStorage.getItem("token");
-  config.headers.Authorization = token ? `${token}` : "";
-  return config;
-});
+axiosInstance.interceptors.request.use(
+  async (config) => {
+    const token = await AsyncStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);

@@ -1,50 +1,50 @@
 import { axiosInstance } from "../api/Api";
 
 export interface CarResponse {
-  name: string;
-  miles_per_Gallon: number;
-  cylinders: number;
-  displacement: number;
-  horsepower: number;
-  weight_in_lbs: number;
-  acceleration: number;
-  year: string;
-  origin: string;
-  id: number;
+  Name: string;
+  Miles_per_Gallon: number;
+  Cylinders: number;
+  Displacement: number;
+  Horsepower: number;
+  Weight_in_lbs: number;
+  Acceleration: number;
+  Year: string;
+  Origin: string;
+  Id: number;
 }
 
 export interface CarRequest {
-  name: string;
-  miles_per_Gallon: number;
-  cylinders: number;
-  displacement: number;
-  horsepower: number;
-  weight_in_lbs: number;
-  acceleration: number;
-  year: string;
-  origin: string;
+  Name: string;
+  Miles_per_Gallon: number;
+  Cylinders: number;
+  Displacement: number;
+  Horsepower: number;
+  Weight_in_lbs: number;
+  Acceleration: number;
+  Year: string;
+  Origin: string;
 }
 
 export const postCar = (content: CarRequest) => {
-  return axiosInstance.post<CarResponse>("/car", {
+  return axiosInstance.post<CarResponse>("/cars", {
     content: content,
   });
 };
 
 export const deleteCar = (id: number) => {
-  axiosInstance.delete<CarResponse>(`/car/${id}`);
+  axiosInstance.delete<CarResponse>(`/cars/${id}`);
 };
 
 export const putCar = (id: number, content: CarRequest) => {
-  axiosInstance.put<CarResponse>(`/car/${id}`, {
+  axiosInstance.put<CarResponse>(`/cars/${id}`, {
     content: content,
   });
 };
 
-export const getCar = (id: number) => {
-  axiosInstance.get<CarResponse>(`/car/${id}`);
+export const getCar = async (id: number) => {
+  return axiosInstance.get<CarResponse>(`/cars/${id}`);
 };
 
-export const getAllCars = () => {
-  return axiosInstance.get<CarResponse>(`/car`);
+export const getAllCars = async () => {
+  return await axiosInstance.get<CarResponse[]>(`/cars`);
 };
