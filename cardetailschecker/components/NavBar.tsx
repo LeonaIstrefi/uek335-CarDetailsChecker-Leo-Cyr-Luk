@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
+import {Text, useColorScheme, View} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useTheme} from "react-native-paper";
 
 
 function Homepage() {
@@ -32,9 +33,15 @@ function Profile() {
 const Tab = createMaterialBottomTabNavigator();
 
 export default function Nav() {
+    const theme = useTheme()
   return (
+
     <NavigationContainer>
-      <Tab.Navigator>
+        <Tab.Navigator
+            activeColor={theme.colors.outline}
+            inactiveColor={theme.colors.outline}
+            barStyle={{ backgroundColor: theme.colors.secondary}}
+        >
         <Tab.Screen
           name="Home"
           component={Homepage}
