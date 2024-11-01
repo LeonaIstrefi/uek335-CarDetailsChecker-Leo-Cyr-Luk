@@ -25,17 +25,14 @@ export interface UserResponse {
   };
 }
 
-export const loginUser = (credentials: LoginRequest) => {
-  axiosInstance
+export const loginUser = async (credentials: LoginRequest) => {
+  const token = await axiosInstance
     .post<UserResponse>("/login", {
       email: credentials.email,
       password: credentials.password,
     })
-    .then((response) => {
-      AsyncStorage.setItem("token", response.data.accessToken);
-      return response.data;
-    })
-    .catch((e) => console.log(e));
+  await AsyncStorage.setItem("token", token.data.accessToken);
+  return token.data;
 };
 
 export const registerUser = (Credentials: User) => {
