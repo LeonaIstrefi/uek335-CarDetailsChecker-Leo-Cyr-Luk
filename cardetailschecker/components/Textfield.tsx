@@ -44,6 +44,6 @@ const styles = StyleSheet.create({
         borderTopStartRadius: 6,
         borderTopEndRadius : 6,
         paddingHorizontal: 16,
-        height: 50, // Adjust height to make the field visually consistent with what you showed.
+        height: 50,
     },
 });
