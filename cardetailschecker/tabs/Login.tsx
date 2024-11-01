@@ -57,12 +57,6 @@ export default function Login() {
             paddingHorizontal: 16,
             paddingVertical: 24,
         },
-        logo: {
-            width: 100,
-            height: 100,
-            alignSelf: 'center',
-            marginBottom: 24,
-        },
         footer: {
             flexDirection: 'column',
             alignItems: "center",
