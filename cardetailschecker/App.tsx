@@ -1,7 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
+import Nav from './components/NavBar';
 import {StyleSheet, useColorScheme, View} from 'react-native';
 import {darkTheme, lightTheme} from "./theme";
 import {PaperProvider, Button, Text} from "react-native-paper";
+
 
 export default function App() {
   const currentTheme = useColorScheme();
@@ -9,10 +11,9 @@ export default function App() {
 
   return (
       <PaperProvider theme={theme}>
-        <View style={[styles.container, { backgroundColor: theme.colors.background}]}>
-      <StatusBar style="auto" />
-    </View>
+       <Nav></Nav>
         </PaperProvider>
+
   );
 }
 
