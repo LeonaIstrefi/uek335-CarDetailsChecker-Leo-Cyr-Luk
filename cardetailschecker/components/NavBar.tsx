@@ -1,30 +1,22 @@
-import * as React from 'react';
-import {Text, useColorScheme, View} from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useTheme} from "react-native-paper";
-
+import * as React from "react";
+import { Text, useColorScheme, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { useTheme } from "react-native-paper";
+import Overview from "../tabs/Overview";
 
 function Homepage() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>Homepage!</Text>
-    </View>
-  );
-}
-
-function Overview() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Overview</Text>
     </View>
   );
 }
 
 function Profile() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>Profile</Text>
     </View>
   );
@@ -33,15 +25,14 @@ function Profile() {
 const Tab = createMaterialBottomTabNavigator();
 
 export default function Nav() {
-    const theme = useTheme()
+  const theme = useTheme();
   return (
-
     <NavigationContainer>
-        <Tab.Navigator
-            activeColor={theme.colors.outline}
-            inactiveColor={theme.colors.outline}
-            barStyle={{ backgroundColor: theme.colors.secondary}}
-        >
+      <Tab.Navigator
+        activeColor={theme.colors.outline}
+        inactiveColor={theme.colors.outline}
+        barStyle={{ backgroundColor: theme.colors.secondary }}
+      >
         <Tab.Screen
           name="Home"
           component={Homepage}
@@ -65,7 +56,11 @@ export default function Nav() {
           component={Profile}
           options={{
             tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="account-outline" color={color} size={24} />
+              <MaterialCommunityIcons
+                name="account-outline"
+                color={color}
+                size={24}
+              />
             ),
           }}
         />
