@@ -19,15 +19,20 @@ export const TextField: React.FC<CustomTextInputProps> = ({ label, value, onChan
                 value={value}
                 onChangeText={onChangeText}
                 placeholder={placeholder}
-                mode="outlined"
-                style={[styles.textInput, { borderColor: theme.colors.outline }, {backgroundColor: theme.colors.secondary}]}
-                outlineColor={theme.colors.secondary}
+                mode="flat"
+                style={[
+                    styles.textInput,
+                    { borderColor: theme.colors.background },
+                    { backgroundColor: theme.colors.secondary },
+                ]}
+                outlineColor={theme.colors.primary}
                 activeOutlineColor={theme.colors.primary}
+                textColor={theme.colors.surface}
+                placeholderTextColor={theme.colors.outline}
             />
         </View>
     );
 };
-
 
 const styles = StyleSheet.create({
     container: {
@@ -36,6 +41,9 @@ const styles = StyleSheet.create({
     textInput: {
         fontSize: 16,
         borderWidth: 1,
-        borderRadius: 8,
+        borderTopStartRadius: 6,
+        borderTopEndRadius : 6,
+        paddingHorizontal: 16,
+        height: 50, // Adjust height to make the field visually consistent with what you showed.
     },
 });

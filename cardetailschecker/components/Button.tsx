@@ -13,7 +13,7 @@ export const Button: React.FC<MyButtonProps> = ({ title, onPress }) => {
             mode="contained"
             onPress={onPress}
             style={{backgroundColor: theme.colors.secondary}}
-            labelStyle={{color: theme.colors.onSecondary}}
+            labelStyle={{color: theme.colors.outline}}
         >{title}
         </MyButton>
     );
