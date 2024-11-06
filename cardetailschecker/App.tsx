@@ -1,8 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
-import Nav from './components/NavBar';
-import {StyleSheet, useColorScheme, View} from 'react-native';
-import {darkTheme, lightTheme} from "./theme";
-import {PaperProvider, Button, Text} from "react-native-paper";
+import { StyleSheet, useColorScheme } from 'react-native';
+import { darkTheme, lightTheme } from "./theme";
+import { PaperProvider } from "react-native-paper";
+import {createStackNavigator} from "@react-navigation/stack";
+import Nav from "./components/NavBar";
+
+
+const Stack = createStackNavigator();
 
 
 export default function App() {
@@ -11,7 +14,7 @@ export default function App() {
 
   return (
       <PaperProvider theme={theme}>
-       <Nav></Nav>
+   <Nav></Nav>
         </PaperProvider>
 
   );

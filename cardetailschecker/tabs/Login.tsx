@@ -5,7 +5,11 @@ import { View, StyleSheet, TouchableOpacity, Text, Image } from "react-native";
 import { Button } from "../components/Button";
 import { LoginRequest, loginUser } from "../service/UserService";
 
-export default function Login() {
+
+export function Login({navigation}) {
+
+
+
     const handleLogin = async () => {
         try {
             const credentials: LoginRequest = {
@@ -14,13 +18,12 @@ export default function Login() {
             };
             const response = await loginUser(credentials);
             if (response) {
-                console.log("User logged in successfully:", response);
+                navigation.navigate("Home")
             }
         } catch (error) {
             console.error("Login error:", error);
         }
     };
-
     const theme = useTheme();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -28,8 +31,6 @@ export default function Login() {
     return (
         <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
             <View style={[{ backgroundColor: theme.colors.surface }]}>
-
-
 
                 <TextField
                     label={"E-mail"}
@@ -58,7 +59,7 @@ export default function Login() {
                     <Text style={[styles.footerText, { color: theme.colors.onBackground }]}>
                         Don’t have an account?
                     </Text>
-                    <TouchableOpacity onPress={() => console.log("Register Now Pressed")}>
+                    <TouchableOpacity onPress={()=> navigation.navigate("Register")}>
                         <Text style={[styles.linkText, { color: theme.colors.primary }]}>
                             register here
                         </Text>

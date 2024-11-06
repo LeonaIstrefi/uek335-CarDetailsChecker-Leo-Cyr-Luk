@@ -4,6 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useTheme} from "react-native-paper";
+import {Login} from "../tabs/Login";
+import {Register} from "../tabs/Register";
 
 
 function Homepage() {
@@ -32,12 +34,13 @@ function Profile() {
 
 const Tab = createMaterialBottomTabNavigator();
 
+
 export default function Nav() {
     const theme = useTheme()
   return (
-
     <NavigationContainer>
         <Tab.Navigator
+            initialRouteName={"Login"}
             activeColor={theme.colors.outline}
             inactiveColor={theme.colors.outline}
             barStyle={{ backgroundColor: theme.colors.secondary}}
@@ -69,6 +72,10 @@ export default function Nav() {
             ),
           }}
         />
+          false &&  <Tab.Group screenOptions={{}} >
+                <Tab.Screen name="Login" component={Login} />
+                <Tab.Screen name="Register" component={Register} />
+            </Tab.Group>
       </Tab.Navigator>
     </NavigationContainer>
   );

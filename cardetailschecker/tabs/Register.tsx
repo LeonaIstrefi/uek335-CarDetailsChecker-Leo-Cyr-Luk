@@ -5,7 +5,9 @@ import { View, StyleSheet, TouchableOpacity, Text, Image } from "react-native";
 import { Button } from "../components/Button";
 import { User, registerUser } from "../service/UserService";
 
-export default function Register() {
+
+export function Register(navigation) {
+
     const handleRegister = async () => {
         try {
             const credentials: User = {
@@ -18,6 +20,7 @@ export default function Register() {
             const response = await registerUser(credentials);
             if (response) {
                 console.log("User registered successfully:", response);
+                navigation.navigate("Home")
             }
         } catch (error) {
             console.error("Registration error:", error);
@@ -82,7 +85,7 @@ export default function Register() {
                     <Text style={[styles.footerText, { color: theme.colors.onBackground }]}>
                         Have an account?
                     </Text>
-                    <TouchableOpacity onPress={() => console.log("Sign in Pressed")}>
+                    <TouchableOpacity onPress={()=>navigation.navigate("Login")}>
                         <Text style={[styles.linkText, { color: theme.colors.primary }]}>
                             sign in
                         </Text>
