@@ -9,12 +9,14 @@ import {
 import { CarCard } from "../components/CarCard";
 import {
   CarResponse,
+  deleteCar,
   getAllCars,
   postCar,
   putCar,
 } from "../service/CarService";
 import { loginUser } from "../service/UserService";
 import CarPopup from "../components/CarPopup";
+import Confirmation from "../components/Confirmation";
 
 export default function Overview() {
   const [searchValue, setSearchValue] = useState("");
@@ -24,14 +26,22 @@ export default function Overview() {
   const [isLoading, setIsLoading] = useState(true);
   const [isCreateVisible, setIsCreateVisible] = useState(false);
   const [isEditVisible, setIsEditVisible] = useState(false);
+  const [isDeleteVisible, setIsDeleteVisible] = useState(false);
   const [editId, setEditId] = useState(0);
+  const [deleteId, setDeleteId] = useState(0);
 
   const handleDelete = (id: number) => {
+    deleteCar(id);
     setCars(cars.filter((car) => car.id !== id));
   };
   const handleEdit = (id: number) => {
     setEditId(id);
     setIsEditVisible(true);
+  };
+
+  const handleConfitmation = (id: number) => {
+    setIsDeleteVisible(true);
+    setDeleteId(id);
   };
 
   useEffect(() => {
@@ -87,7 +97,7 @@ export default function Overview() {
           <CarCard
             {...car}
             key={car.id ? car.id : car.Name}
-            onDelete={handleDelete}
+            onDelete={handleConfitmation}
             onEdit={handleEdit}
           />
         ))}
@@ -129,6 +139,14 @@ export default function Overview() {
           const index = cars.findIndex((car) => car.id === data.id);
           cars[index] = data;
           setIsEditVisible(false);
+        }}
+      />
+      <Confirmation
+        isVisible={isDeleteVisible}
+        cancleAction={() => setIsDeleteVisible(false)}
+        submitAction={() => {
+          handleDelete(deleteId);
+          setIsDeleteVisible(false);
         }}
       />
     </View>

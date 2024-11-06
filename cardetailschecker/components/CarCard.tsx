@@ -62,7 +62,6 @@ export const CarCard = ({
             {...props}
             icon="delete"
             onPress={() => {
-              deleteCar(id);
               onDelete(id);
             }}
           />
