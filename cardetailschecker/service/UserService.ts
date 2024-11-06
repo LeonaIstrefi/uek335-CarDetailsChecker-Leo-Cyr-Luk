@@ -59,6 +59,4 @@ export const putUser = async (userData: User) => {
     .catch(error => console.log(error));
 };
 
-export const cancelPutUser = async () => {
-  console.log("User update canceled.");
-};
+
