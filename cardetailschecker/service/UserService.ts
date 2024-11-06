@@ -39,28 +39,31 @@ export const loginUser = async (credentials: LoginRequest) => {
     .catch((e) => console.log(e));
 };
 
-export const registerUser = (credentials: User) => {
-  axiosInstance.post<UserResponse>("/register").then((response) => {
+export const registerUser = async (credentials: User) => {
+  try {
+    const response = await axiosInstance.post<UserResponse>(
+      "/register",
+      credentials
+    );
     AsyncStorage.setItem("token", response.data.accessToken);
+    AsyncStorage.setItem("id", String(response.data.user.id));
     return response.data;
   } catch (e) {
     console.log("Registration error:", e);
     throw e;
   }
-
 };
 
 export const getCurrentUser = async () => {
   const id = await AsyncStorage.getItem("id");
-console.log('User ID from AsyncStorage:', id);
+  console.log("User ID from AsyncStorage:", id);
   return axiosInstance.get<UserResponse>(`/users/${id}`);
 };
 
 export const putUser = async (userData: User) => {
   const id = await AsyncStorage.getItem("id");
-  return axiosInstance.put(`/users/${id}`, userData)
-    .then(response => response.data)
-    .catch(error => console.log(error));
+  return axiosInstance
+    .put(`/users/${id}`, userData)
+    .then((response) => response.data)
+    .catch((error) => console.log(error));
 };
-
-

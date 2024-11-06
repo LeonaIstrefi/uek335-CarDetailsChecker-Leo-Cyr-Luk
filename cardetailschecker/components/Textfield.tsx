@@ -1,5 +1,5 @@
 import { TextInput as PaperTextInput, useTheme } from "react-native-paper";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, KeyboardTypeOptions } from "react-native";
 import React, { useState } from "react";
 
 interface CustomTextInputProps {
@@ -19,6 +19,7 @@ export const TextField: React.FC<CustomTextInputProps> = ({
   placeholder,
   pattern,
   errorText,
+  keyboardType,
 }) => {
   const theme = useTheme();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
