@@ -6,22 +6,8 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useTheme } from "react-native-paper";
 import Overview from "../tabs/Overview";
-
-function Homepage() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Homepage!</Text>
-    </View>
-  );
-}
-
-function Profile() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Profile</Text>
-    </View>
-  );
-}
+import Profile from "../tabs/Profile";
+import Home from "../tabs/Home";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -36,7 +22,7 @@ export default function Nav() {
       >
         <Tab.Screen
           name="Home"
-          component={Homepage}
+          component={Home}
           options={{
             tabBarIcon: ({ color }) => (
               <MaterialIcons name="home" color={color} size={24} />
