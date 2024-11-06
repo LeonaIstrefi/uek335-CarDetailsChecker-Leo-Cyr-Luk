@@ -31,16 +31,17 @@ export const loginUser = async (credentials: LoginRequest) => {
       email: credentials.email,
       password: credentials.password,
     })
-  await AsyncStorage.setItem("token", token.data.accessToken);
-  return token.data;
+    .then((response) => {
+      AsyncStorage.setItem("token", response.data.accessToken);
+      AsyncStorage.setItem("id", String(response.data.user.id));
+      return response.data;
+    })
+    .catch((e) => console.log(e));
 };
 
-export const registerUser = async (credentials: User) => {
-  try {
-    const response = await axiosInstance.post<UserResponse>("/register", {
-      ...credentials,
-    });
-    await AsyncStorage.setItem("token", response.data.accessToken);
+export const registerUser = (credentials: User) => {
+  axiosInstance.post<UserResponse>("/register").then((response) => {
+    AsyncStorage.setItem("token", response.data.accessToken);
     return response.data;
   } catch (e) {
     console.log("Registration error:", e);
@@ -48,3 +49,18 @@ export const registerUser = async (credentials: User) => {
   }
 
 };
+
+export const getCurrentUser = async () => {
+  const id = await AsyncStorage.getItem("id");
+console.log('User ID from AsyncStorage:', id);
+  return axiosInstance.get<UserResponse>(`/users/${id}`);
+};
+
+export const putUser = async (userData: User) => {
+  const id = await AsyncStorage.getItem("id");
+  return axiosInstance.put(`/users/${id}`, userData)
+    .then(response => response.data)
+    .catch(error => console.log(error));
+};
+
+
