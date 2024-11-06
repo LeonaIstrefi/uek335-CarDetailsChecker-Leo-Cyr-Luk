@@ -25,8 +25,8 @@ export interface UserResponse {
   };
 }
 
-export const loginUser = (credentials: LoginRequest) => {
-  axiosInstance
+export const loginUser = async (credentials: LoginRequest) => {
+  const token = await axiosInstance
     .post<UserResponse>("/login", {
       email: credentials.email,
       password: credentials.password,
@@ -43,7 +43,11 @@ export const registerUser = (credentials: User) => {
   axiosInstance.post<UserResponse>("/register").then((response) => {
     AsyncStorage.setItem("token", response.data.accessToken);
     return response.data;
-  });
+  } catch (e) {
+    console.log("Registration error:", e);
+    throw e;
+  }
+
 };
 
 export const getCurrentUser = async () => {

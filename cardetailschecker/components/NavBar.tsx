@@ -1,61 +1,96 @@
 import * as React from "react";
-import { Text, useColorScheme, View } from "react-native";
+import { useEffect, useState } from "react";
+import { Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useTheme } from "react-native-paper";
+import { Login } from "../tabs/Login";
+import { Register } from "../tabs/Register";
+import { createStackNavigator } from "@react-navigation/stack";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Overview from "../tabs/Overview";
 import Profile from "../tabs/Profile";
 import Home from "../tabs/Home";
 
 const Tab = createMaterialBottomTabNavigator();
 
+const Stack = createStackNavigator();
+
 export default function Nav() {
   const theme = useTheme();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      try {
+        const token = await AsyncStorage.getItem("accessToken");
+        if (token) {
+          setIsAuthenticated(true);
+        }
+      } catch (error) {
+        console.error("Failed to retrieve token:", error);
+      }
+    };
+    checkAuthentication();
+  }, []);
+
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        activeColor={theme.colors.outline}
-        inactiveColor={theme.colors.outline}
-        barStyle={{ backgroundColor: theme.colors.secondary }}
-      >
-        <Tab.Screen
-          name="Home"
-          component={Home}
-          options={{
-            tabBarIcon: ({ color }) => (
-              <MaterialIcons name="home" color={color} size={24} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Overview"
-          component={Overview}
-          options={{
-            tabBarIcon: ({ color }) => (
-              <MaterialIcons
-                name="directions-car"
-                size={24}
-                color={theme.colors.outline}
-              />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Profile"
-          component={Profile}
-          options={{
-            tabBarIcon: ({ color }) => (
-              <MaterialIcons
-                name="person"
-                size={24}
-                color={theme.colors.outline}
-              />
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <Tab.Navigator
+      initialRouteName={"Home"}
+      activeColor={theme.colors.outline}
+      inactiveColor={theme.colors.outline}
+      barStyle={{ backgroundColor: theme.colors.secondary }}
+    >
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="home" color={color} size={24} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Overview"
+        component={Overview}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="car" color={color} size={24} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Login"
+        component={Login}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="car" color={color} size={24} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Register"
+        component={Register}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="car" color={color} size={24} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="account-outline"
+              color={color}
+              size={24}
+            />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 }

@@ -1,12 +1,14 @@
-import React from "react";
 import { TextInput as PaperTextInput, useTheme } from "react-native-paper";
-import { KeyboardTypeOptions, StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
+import React, { useState } from "react";
 
 interface CustomTextInputProps {
   label: string;
   value: string;
   onChangeText: (text: string) => void;
   placeholder?: string;
+  pattern?: RegExp;
+  errorText?: string;
   keyboardType?: KeyboardTypeOptions;
 }
 
@@ -15,16 +17,29 @@ export const TextField: React.FC<CustomTextInputProps> = ({
   value,
   onChangeText,
   placeholder,
-  keyboardType,
+  pattern,
+  errorText,
 }) => {
   const theme = useTheme();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const handleTextChange = (text: string) => {
+    onChangeText(text);
+    if (pattern) {
+      if (!pattern.test(text)) {
+        setErrorMessage(errorText || "Invalid input");
+      } else {
+        setErrorMessage(null);
+      }
+    }
+  };
 
   return (
     <View style={styles.container}>
       <PaperTextInput
         label={label}
         value={value}
-        onChangeText={onChangeText}
+        onChangeText={handleTextChange}
         placeholder={placeholder}
         mode="flat"
         style={[
@@ -38,6 +53,11 @@ export const TextField: React.FC<CustomTextInputProps> = ({
         keyboardType={keyboardType ? keyboardType : "default"}
         placeholderTextColor={theme.colors.outline}
       />
+      {errorMessage ? (
+        <Text style={[styles.errorText, { color: theme.colors.error }]}>
+          {errorMessage}
+        </Text>
+      ) : null}
     </View>
   );
 };
@@ -53,5 +73,9 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 6,
     paddingHorizontal: 16,
     height: 50,
+  },
+  errorText: {
+    fontSize: 12,
+    marginTop: 4,
   },
 });

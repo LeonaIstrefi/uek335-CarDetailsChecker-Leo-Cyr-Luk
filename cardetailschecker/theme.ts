@@ -9,7 +9,8 @@ export const lightTheme = {
         primary: '#484d3d',
         secondary: '#9eb3a4',
         surface: '#627a70', //Also text color MD3 does not support accent
-        secondaryContainer: '#627a70'
+        secondaryContainer: '#627a70',
+        onSurface: 'rgba(98,122,112,0.25)'
     },
 };
 
