@@ -3,6 +3,7 @@ import { Text, useColorScheme, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useTheme } from "react-native-paper";
 import Overview from "../tabs/Overview";
 
@@ -38,7 +39,7 @@ export default function Nav() {
           component={Homepage}
           options={{
             tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="home" color={color} size={24} />
+              <MaterialIcons name="home" color={color} size={24} />
             ),
           }}
         />
@@ -47,7 +48,11 @@ export default function Nav() {
           component={Overview}
           options={{
             tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="car" color={color} size={24} />
+              <MaterialIcons
+                name="directions-car"
+                size={24}
+                color={theme.colors.outline}
+              />
             ),
           }}
         />
@@ -56,10 +61,10 @@ export default function Nav() {
           component={Profile}
           options={{
             tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons
-                name="account-outline"
-                color={color}
+              <MaterialIcons
+                name="person"
                 size={24}
+                color={theme.colors.outline}
               />
             ),
           }}
