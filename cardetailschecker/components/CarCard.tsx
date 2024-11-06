@@ -2,6 +2,7 @@ import React from "react";
 import { IconButton, List, Text, useTheme } from "react-native-paper";
 import { CarResponse } from "../service/CarService";
 import { StyleSheet, View } from "react-native";
+import ListItem from "./ListItem";
 
 export interface CarProps {
   Name: string;
@@ -47,6 +48,8 @@ export const CarCard = ({
               overflow: "hidden",
             }
       }
+      titleStyle={{ color: theme.colors.outline }}
+      descriptionStyle={{ color: theme.colors.outline }}
       title={Name}
       description={`Year ${Year}`}
       right={(props) => (
@@ -56,8 +59,16 @@ export const CarCard = ({
             alignItems: "center",
           }}
         >
-          <IconButton {...props} icon="pencil" onPress={() => {}} />
-          <IconButton {...props} icon="delete" onPress={() => {}} />
+          <IconButton
+            {...props}
+            icon="pencil"
+            onPress={() => console.log("Pressed")}
+          />
+          <IconButton
+            {...props}
+            icon="delete"
+            onPress={() => console.log("Pressed")}
+          />
           <List.Icon icon={expanded ? "chevron-up" : "chevron-down"} />
         </View>
       )}
@@ -71,64 +82,13 @@ export const CarCard = ({
           borderBottomRightRadius: 8,
         }}
       >
-        <List.Item
-          titleStyle={{ height: 20, backgroundColor: theme.colors.primary }}
-          title={"hello"}
-        />
-        <List.Item
-          title={
-            <Text
-              style={{
-                fontSize: 15,
-              }}
-            >{`Cylinders: ${Cylinders}`}</Text>
-          }
-        />
-        <List.Item
-          title={
-            <Text
-              style={{
-                fontSize: 15,
-              }}
-            >{`Displacement: ${Displacement}`}</Text>
-          }
-        />
-        <List.Item
-          title={
-            <Text
-              style={{
-                fontSize: 15,
-              }}
-            >{`Horsepower: ${Horsepower}`}</Text>
-          }
-        />
-        <List.Item
-          title={
-            <Text
-              style={{
-                fontSize: 15,
-              }}
-            >{`Weight in lbs: ${Weight_in_lbs}`}</Text>
-          }
-        />
-        <List.Item
-          title={
-            <Text
-              style={{
-                fontSize: 15,
-              }}
-            >{`Acceleration: ${Acceleration}`}</Text>
-          }
-        />
-        <List.Item
-          title={
-            <Text
-              style={{
-                fontSize: 15,
-              }}
-            >{`Origin: ${Origin}`}</Text>
-          }
-        />
+        <ListItem content={`Miles per Gallon: ${Miles_per_Gallon}`} />
+        <ListItem content={`Cylinders: ${Cylinders}`} />
+        <ListItem content={`Displacement: ${Displacement}`} />
+        <ListItem content={`Horsepower: ${Horsepower}`} />
+        <ListItem content={`Weight in lbs: ${Weight_in_lbs}`} />
+        <ListItem content={`Acceleration: ${Acceleration}`} />
+        <ListItem content={`Origin: ${Origin}`} />
       </View>
     </List.Accordion>
   );
