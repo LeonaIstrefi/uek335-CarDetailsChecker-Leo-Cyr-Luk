@@ -10,7 +10,7 @@ export interface CarResponse {
   Acceleration: number;
   Year: string;
   Origin: string;
-  Id: number;
+  id: number;
 }
 
 export interface CarRequest {
@@ -27,7 +27,7 @@ export interface CarRequest {
 
 export const postCar = (content: CarRequest) => {
   return axiosInstance.post<CarResponse>("/cars", {
-    content: content,
+    ...content,
   });
 };
 
@@ -37,7 +37,7 @@ export const deleteCar = (id: number) => {
 
 export const putCar = (id: number, content: CarRequest) => {
   axiosInstance.put<CarResponse>(`/cars/${id}`, {
-    content: content,
+    ...content,
   });
 };
 
