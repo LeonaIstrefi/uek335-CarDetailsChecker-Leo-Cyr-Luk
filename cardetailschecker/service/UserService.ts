@@ -33,14 +33,32 @@ export const loginUser = (credentials: LoginRequest) => {
     })
     .then((response) => {
       AsyncStorage.setItem("token", response.data.accessToken);
+      AsyncStorage.setItem("id", String(response.data.user.id));
       return response.data;
     })
     .catch((e) => console.log(e));
 };
 
-export const registerUser = (Credentials: User) => {
+export const registerUser = (credentials: User) => {
   axiosInstance.post<UserResponse>("/register").then((response) => {
     AsyncStorage.setItem("token", response.data.accessToken);
     return response.data;
   });
+};
+
+export const getCurrentUser = async () => {
+  const id = await AsyncStorage.getItem("id");
+console.log('User ID from AsyncStorage:', id);
+  return axiosInstance.get<UserResponse>(`/users/${id}`);
+};
+
+export const putUser = async (userData: User) => {
+  const id = await AsyncStorage.getItem("id");
+  return axiosInstance.put(`/users/${id}`, userData)
+    .then(response => response.data)
+    .catch(error => console.log(error));
+};
+
+export const cancelPutUser = async () => {
+  console.log("User update canceled.");
 };
