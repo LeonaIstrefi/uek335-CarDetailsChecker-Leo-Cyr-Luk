@@ -1,36 +1,55 @@
-import { useTheme } from "react-native-paper";
+import { useTheme, TextInput } from "react-native-paper";
 import { TextField } from "../components/Textfield";
 import React, { useState } from "react";
 import { View, StyleSheet, TouchableOpacity, Text, Image } from "react-native";
 import { Button } from "../components/Button";
-import { LoginRequest, loginUser } from "../service/UserService";
+import { User, registerUser } from "../service/UserService";
 
-export default function Login() {
-    const handleLogin = async () => {
+export default function Register() {
+    const handleRegister = async () => {
         try {
-            const credentials: LoginRequest = {
+            const credentials: User = {
+                firstname: firstname,
+                lastname: lastname,
                 email: email,
+                birthday: birthday,
                 password: password,
             };
-            const response = await loginUser(credentials);
+            const response = await registerUser(credentials);
             if (response) {
-                console.log("User logged in successfully:", response);
+                console.log("User registered successfully:", response);
             }
         } catch (error) {
-            console.error("Login error:", error);
+            console.error("Registration error:", error);
         }
     };
 
     const theme = useTheme();
+    const [firstname, setFirstname] = useState('');
+    const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
+    const [birthday, setBirthday] = useState('');
     const [password, setPassword] = useState('');
 
     return (
         <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-            <View style={[{ backgroundColor: theme.colors.surface }]}>
-
-
-
+            <View style={{ backgroundColor: theme.colors.onSurface }}>
+                <TextField
+                    label={"Firstname"}
+                    value={firstname}
+                    onChangeText={setFirstname}
+                    placeholder="Enter your first name"
+                    pattern={/^[A-Za-z\s'-]+$/}
+                    errorText={"Only letters are allowed"}
+                />
+                <TextField
+                    label={"Lastname"}
+                    value={lastname}
+                    onChangeText={setLastname}
+                    placeholder="Enter your last name"
+                    pattern={/^[A-Za-z\s'-]+$/}
+                    errorText={"Only letters are allowed"}
+                />
                 <TextField
                     label={"E-mail"}
                     value={email}
@@ -38,6 +57,12 @@ export default function Login() {
                     placeholder="Enter your email"
                     pattern={/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/}
                     errorText={"Enter a valid email address"}
+                />
+                <TextField
+                    label={"Birthday"}
+                    value={birthday}
+                    onChangeText={setBirthday}
+                    placeholder="MM/DD/YYYY"
                 />
                 <TextField
                     label={"Password"}
@@ -49,18 +74,17 @@ export default function Login() {
                 />
 
                 <Button
-                    title={"Sign in"}
-                    style={styles.signInButton}
-                    onPress={handleLogin}
+                    title={"Register Now"}
+                    style={styles.registerButton}
+                    onPress={handleRegister}
                 />
-
                 <View style={styles.footer}>
                     <Text style={[styles.footerText, { color: theme.colors.onBackground }]}>
-                        Don’t have an account?
+                        Have an account?
                     </Text>
-                    <TouchableOpacity onPress={() => console.log("Register Now Pressed")}>
+                    <TouchableOpacity onPress={() => console.log("Sign in Pressed")}>
                         <Text style={[styles.linkText, { color: theme.colors.primary }]}>
-                            register here
+                            sign in
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -76,7 +100,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         paddingVertical: 24,
     },
-    signInButton: {
+    registerButton: {
         marginTop: 20,
         width: '100%',
         paddingVertical: 10,

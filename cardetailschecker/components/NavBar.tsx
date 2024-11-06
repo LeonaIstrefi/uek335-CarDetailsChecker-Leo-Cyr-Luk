@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Text, useColorScheme, View} from 'react-native';
+import {Text, View} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
