@@ -1,20 +1,8 @@
 import React from "react";
 import { IconButton, List, Text, useTheme } from "react-native-paper";
-import { CarResponse } from "../service/CarService";
+import { CarResponse, deleteCar } from "../service/CarService";
 import { StyleSheet, View } from "react-native";
 import ListItem from "./ListItem";
-
-export interface CarProps {
-  Name: string;
-  Miles_per_Gallon: number;
-  Cylinders: number;
-  Displacement: number;
-  Horsepower: number;
-  Weight_in_lbs: number;
-  Acceleration: number;
-  Year: string;
-  Origin: string;
-}
 
 export const CarCard = ({
   Name,
@@ -26,7 +14,12 @@ export const CarCard = ({
   Acceleration,
   Year,
   Origin,
-}: CarProps) => {
+  id,
+  onDelete,
+  onEdit,
+}: CarResponse & { onDelete: (id: number) => void } & {
+  onEdit: (id: number) => void;
+}) => {
   const [expanded, setExpanded] = React.useState(false);
 
   const handlePress = () => setExpanded(!expanded);
@@ -34,18 +27,17 @@ export const CarCard = ({
   const theme = useTheme();
   return (
     <List.Accordion
+      pointerEvents="box-none"
       style={
         expanded
           ? {
               backgroundColor: theme.colors.secondary,
               borderTopLeftRadius: 8,
               borderTopRightRadius: 8,
-              overflow: "hidden",
             }
           : {
               backgroundColor: theme.colors.secondary,
               borderRadius: 8,
-              overflow: "hidden",
             }
       }
       titleStyle={{ color: theme.colors.outline }}
@@ -62,12 +54,17 @@ export const CarCard = ({
           <IconButton
             {...props}
             icon="pencil"
-            onPress={() => console.log("Pressed")}
+            onPress={() => {
+              onEdit(id);
+            }}
           />
           <IconButton
             {...props}
             icon="delete"
-            onPress={() => console.log("Pressed")}
+            onPress={() => {
+              deleteCar(id);
+              onDelete(id);
+            }}
           />
           <List.Icon icon={expanded ? "chevron-up" : "chevron-down"} />
         </View>

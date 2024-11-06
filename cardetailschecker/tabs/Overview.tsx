@@ -7,8 +7,14 @@ import {
   useTheme,
 } from "react-native-paper";
 import { CarCard } from "../components/CarCard";
-import { CarResponse, getAllCars } from "../service/CarService";
+import {
+  CarResponse,
+  getAllCars,
+  postCar,
+  putCar,
+} from "../service/CarService";
 import { loginUser } from "../service/UserService";
+import CarPopup from "../components/CarPopup";
 
 export default function Overview() {
   const [searchValue, setSearchValue] = useState("");
@@ -16,6 +22,17 @@ export default function Overview() {
   const [cars, setCars] = useState<CarResponse[]>([]);
   const [originalCars, setOriginalCars] = useState<CarResponse[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isCreateVisible, setIsCreateVisible] = useState(false);
+  const [isEditVisible, setIsEditVisible] = useState(false);
+  const [editId, setEditId] = useState(0);
+
+  const handleDelete = (id: number) => {
+    setCars(cars.filter((car) => car.id !== id));
+  };
+  const handleEdit = (id: number) => {
+    setEditId(id);
+    setIsEditVisible(true);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,7 +84,12 @@ export default function Overview() {
         }}
       >
         {cars.map((car) => (
-          <CarCard key={car.Id} {...car} />
+          <CarCard
+            {...car}
+            key={car.id ? car.id : car.Name}
+            onDelete={handleDelete}
+            onEdit={handleEdit}
+          />
         ))}
       </ScrollView>
       <FAB
@@ -81,7 +103,33 @@ export default function Overview() {
         customSize={80}
         color={theme.colors.outline}
         icon="plus"
-        onPress={() => console.log("Pressed")}
+        onPress={() => setIsCreateVisible(true)}
+      />
+      <CarPopup
+        title="Add Car"
+        isVisible={isCreateVisible}
+        cancleAction={() => {
+          setIsCreateVisible(false);
+        }}
+        submitAction={(data) => {
+          postCar(data);
+          cars.push(data);
+          setIsCreateVisible(false);
+        }}
+      />
+      <CarPopup
+        title="Edit Car"
+        carId={editId}
+        isVisible={isEditVisible}
+        cancleAction={() => {
+          setIsEditVisible(false);
+        }}
+        submitAction={(data) => {
+          putCar(data.id, data);
+          const index = cars.findIndex((car) => car.id === data.id);
+          cars[index] = data;
+          setIsEditVisible(false);
+        }}
       />
     </View>
   );
