@@ -4,10 +4,10 @@ import React, { useState } from "react";
 import { View, StyleSheet, TouchableOpacity, Text, Image } from "react-native";
 import { Button } from "../components/Button";
 import { LoginRequest, loginUser } from "../service/UserService";
+import {useNavigation} from "@react-navigation/native";
 
 
-export function Login({navigation}) {
-
+export function Login(navigation) {
 
 
     const handleLogin = async () => {
@@ -18,7 +18,7 @@ export function Login({navigation}) {
             };
             const response = await loginUser(credentials);
             if (response) {
-                navigation.navigate("Home")
+                navigation.replace(()=>"Home");
             }
         } catch (error) {
             console.error("Login error:", error);
