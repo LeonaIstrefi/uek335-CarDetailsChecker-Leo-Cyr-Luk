@@ -65,7 +65,10 @@ export const CarCard = ({
               onDelete(id);
             }}
           />
-          <List.Icon icon={expanded ? "chevron-up" : "chevron-down"} />
+          <List.Icon
+            icon={expanded ? "chevron-up" : "chevron-down"}
+            color={theme.colors.outline}
+          />
         </View>
       )}
       expanded={expanded}

@@ -116,7 +116,7 @@ function Profile() {
             onChangeText={setLastName}
           />
 
-          <DatePicker />
+          <DatePicker value={birthday} onChange={setBirthday} />
 
           <TextField label="E-Mail" value={email} onChangeText={setEmail} />
         </View>

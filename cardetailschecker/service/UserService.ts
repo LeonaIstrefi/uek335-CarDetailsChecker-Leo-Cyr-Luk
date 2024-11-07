@@ -41,8 +41,6 @@ export const registerUser = async (credentials: User) => {
       "/register",
       credentials
     );
-    AsyncStorage.setItem("token", response.data.accessToken);
-    AsyncStorage.setItem("id", String(response.data.user.id));
     return response.data;
   } catch (e) {
     console.log("Registration error:", e);

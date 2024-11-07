@@ -19,22 +19,23 @@ export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   React.useEffect(() => {
-    const checkAuthentication = async () => {
+    const intervalId = setInterval(async () => {
       try {
         const token = await AsyncStorage.getItem("token");
         setIsAuthenticated(!!token);
       } catch (error) {
         console.error("Failed to retrieve token:", error);
       }
-    };
-    checkAuthentication();
+    }, 1000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
     <PaperProvider theme={theme}>
       <AuthProvider>
         <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
             {isAuthenticated ? (
               <Stack.Screen name="Home" component={Nav} />
             ) : (
