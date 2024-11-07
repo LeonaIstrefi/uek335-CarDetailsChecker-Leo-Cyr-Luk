@@ -1,72 +1,63 @@
-import * as React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { TextField } from '../components/Textfield';
-import { Button } from '../components/Button';
-import { useTheme } from 'react-native-paper';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { useNavigation } from '@react-navigation/native';
-import DatePicker from '../components/DatePicker';
-import { getCurrentUser, loginUser, putUser, cancelPutUser } from '../service/UserService';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as React from "react";
+import { Text, View, StyleSheet } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { TextField } from "../components/Textfield";
+import { Button } from "../components/Button";
+import { useTheme } from "react-native-paper";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { useNavigation } from "@react-navigation/native";
+import DatePicker from "../components/DatePicker";
+import { getCurrentUser, loginUser, putUser } from "../service/UserService";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function Profile() {
-  const [originalFirstName, setOriginalFirstName] = React.useState('');
-  const [originalLastName, setOriginalLastName] = React.useState('');
-  const [originalBirthday, setOriginalBirthday] = React.useState('');
-  const [originalEmail, setOriginalEmail] = React.useState('');
+  const [originalFirstName, setOriginalFirstName] = React.useState("");
+  const [originalLastName, setOriginalLastName] = React.useState("");
+  const [originalBirthday, setOriginalBirthday] = React.useState("");
+  const [originalEmail, setOriginalEmail] = React.useState("");
 
-  const [firstName, setFirstName] = React.useState('');
-  const [lastName, setLastName] = React.useState('');
-  const [birthday, setBirthday] = React.useState('');
-  const [email, setEmail] = React.useState('');
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [birthday, setBirthday] = React.useState("");
+  const [email, setEmail] = React.useState("");
 
   const theme = useTheme();
   const navigation = useNavigation();
 
   const loadProfileData = async () => {
     try {
-      await loginUser({
-        email: 'olivier@mail.com',
-        password: 'bestPassw0rd',
-      });
-  
       const id = await AsyncStorage.getItem("id");
-      console.log('User ID from AsyncStorage:', id);
-  
+      console.log("User ID from AsyncStorage:", id);
+
       if (!id) {
         throw new Error("No user ID found in AsyncStorage");
       }
-  
+
       const response = await getCurrentUser();
       const rawResponse = response.request._response;
-      console.log('Raw response:', rawResponse);
-  
+      console.log("Raw response:", rawResponse);
+
       const parsedData = JSON.parse(rawResponse);
-      console.log('Parsed user data:', parsedData);
-  
-     
+      console.log("Parsed user data:", parsedData);
+
       if (parsedData) {
-        setOriginalFirstName(parsedData.firstname || '');
-        setOriginalLastName(parsedData.lastname || '');
-        setOriginalBirthday(parsedData.birthday || '');
-        setOriginalEmail(parsedData.email || '');
-  
-        setFirstName(parsedData.firstname || '');
-        setLastName(parsedData.lastname || '');
-        setBirthday(parsedData.birthday || '');
-        setEmail(parsedData.email || '');
+        setOriginalFirstName(parsedData.firstname || "");
+        setOriginalLastName(parsedData.lastname || "");
+        setOriginalBirthday(parsedData.birthday || "");
+        setOriginalEmail(parsedData.email || "");
+
+        setFirstName(parsedData.firstname || "");
+        setLastName(parsedData.lastname || "");
+        setBirthday(parsedData.birthday || "");
+        setEmail(parsedData.email || "");
       } else {
-        console.error('No user data returned after parsing');
+        console.error("No user data returned after parsing");
       }
     } catch (error) {
-      console.error('Error loading profile data:', error);
+      console.error("Error loading profile data:", error);
     }
   };
-  
-  
-  
-  
+
   const handleSave = async () => {
     try {
       await putUser({
@@ -74,11 +65,11 @@ function Profile() {
         lastname: lastName,
         email: email,
         birthday: birthday,
-        password: '', 
+        password: "",
       });
-      console.log('Profile updated successfully');
+      console.log("Profile updated successfully");
     } catch (error) {
-      console.error('Error updating profile:', error);
+      console.error("Error updating profile:", error);
     }
   };
 
@@ -87,7 +78,6 @@ function Profile() {
     setLastName(originalLastName);
     setBirthday(originalBirthday);
     setEmail(originalEmail);
-    cancelPutUser();
   };
 
   React.useEffect(() => {
@@ -96,10 +86,22 @@ function Profile() {
 
   return (
     <SafeAreaProvider>
-      <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <View
+        style={[styles.container, { backgroundColor: theme.colors.background }]}
+      >
         <View style={styles.header}>
-          <MaterialIcons name="account-circle" size={100} color={theme.colors.surface} />
-          <Button title="Log Out" onPress={() => navigation.navigate('../tabs/Login')} />
+          <MaterialIcons
+            name="account-circle"
+            size={100}
+            color={theme.colors.surface}
+          />
+          <Button
+            title="Log Out"
+            onPress={async () => {
+              console.log("Logged out");
+              await AsyncStorage.removeItem("token");
+            }}
+          />
         </View>
 
         <View style={styles.formContainer}>
@@ -116,11 +118,7 @@ function Profile() {
 
           <DatePicker />
 
-          <TextField
-            label="E-Mail"
-            value={email}
-            onChangeText={setEmail}
-          />
+          <TextField label="E-Mail" value={email} onChangeText={setEmail} />
         </View>
 
         <View style={styles.buttonContainer}>
@@ -143,9 +141,9 @@ const styles = StyleSheet.create({
     marginBottom: 120,
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginBottom: 30,
   },
   formContainer: {
@@ -153,8 +151,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
     marginTop: 20,
   },
 });

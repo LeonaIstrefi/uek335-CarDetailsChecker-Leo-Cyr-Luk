@@ -46,12 +46,6 @@ export default function Overview() {
 
   useEffect(() => {
     const fetchData = async () => {
-      // For testing because login is not implemented
-      loginUser({
-        email: "olivier@mail.com",
-        password: "bestPassw0rd",
-      });
-      // ---------------------
       const response = await getAllCars();
       setCars(response.data);
       setIsLoading(false);

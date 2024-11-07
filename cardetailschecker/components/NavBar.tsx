@@ -61,24 +61,6 @@ export default function Nav() {
         }}
       />
       <Tab.Screen
-        name="Login"
-        component={Login}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="car" color={color} size={24} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Register"
-        component={Register}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="car" color={color} size={24} />
-          ),
-        }}
-      />
-      <Tab.Screen
         name="Profile"
         component={Profile}
         options={{

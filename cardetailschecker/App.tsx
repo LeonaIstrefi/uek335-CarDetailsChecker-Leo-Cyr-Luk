@@ -9,19 +9,41 @@ import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { useState } from "react";
 import { AuthProvider, useAuth } from "./context/AuthenticationContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createStackNavigator();
 
 export default function App() {
   const currentTheme = useColorScheme();
   const theme = currentTheme === "dark" ? darkTheme : lightTheme;
-  const { isAuthenticated } = useAuth();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  React.useEffect(() => {
+    const checkAuthentication = async () => {
+      try {
+        const token = await AsyncStorage.getItem("token");
+        setIsAuthenticated(!!token);
+      } catch (error) {
+        console.error("Failed to retrieve token:", error);
+      }
+    };
+    checkAuthentication();
+  }, []);
 
   return (
     <PaperProvider theme={theme}>
       <AuthProvider>
         <NavigationContainer>
-          <Nav />
+          <Stack.Navigator>
+            {isAuthenticated ? (
+              <Stack.Screen name="Home" component={Nav} />
+            ) : (
+              <>
+                <Stack.Screen name="Login" component={Login} />
+                <Stack.Screen name="Register" component={Register} />
+              </>
+            )}
+          </Stack.Navigator>
         </NavigationContainer>
       </AuthProvider>
     </PaperProvider>

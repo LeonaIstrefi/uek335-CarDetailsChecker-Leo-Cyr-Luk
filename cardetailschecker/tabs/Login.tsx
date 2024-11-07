@@ -4,15 +4,10 @@ import React, { useState } from "react";
 import { View, StyleSheet, TouchableOpacity, Text, Image } from "react-native";
 import { Button } from "../components/Button";
 import { LoginRequest, loginUser } from "../service/UserService";
-import {
-  useNavigation,
-  useNavigationContainerRef,
-} from "@react-navigation/native";
 import { useAuth } from "../context/AuthenticationContext";
 
-export function Login() {
-  const { setIsAuthenticated } = useAuth();
-  const navigation = useNavigation();
+export function Login({ navigation }) {
+  const { isAuthenticated, setIsAuthenticated } = useAuth();
 
   const handleLogin = async () => {
     try {
@@ -23,10 +18,7 @@ export function Login() {
       const response = await loginUser(credentials);
       if (response) {
         setIsAuthenticated(true);
-        navigation.reset({
-          index: 0,
-          routes: [{ name: "Home" }],
-        });
+        console.log(isAuthenticated);
       }
     } catch (error) {
       console.error("Login error:", error);
