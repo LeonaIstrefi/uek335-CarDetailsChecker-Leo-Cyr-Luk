@@ -11,6 +11,12 @@
      git --version
      ```
 
+3. **Docker** You'll need Docker to run the backend.
+   - Check by running:
+      ```bash
+     docker -v
+     ```
+
 ### Steps to Set Up
 
 1. **Clone the Repository**:
@@ -29,6 +35,12 @@
      yarn install
      ```
    - This will install all dependencies as specified in the `package.json` file.
+
+3. **Start a docker container**
+   - In a terminal run:
+      ```bash
+     docker run -p 3000:3000 --name restdb -d devnyzh/rest-jsondb
+     ```
 
 5. **Run the Project**:
    - Once the build is complete, you can start the application with:
