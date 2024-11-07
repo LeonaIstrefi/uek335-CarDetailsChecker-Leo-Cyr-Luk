@@ -48,8 +48,9 @@
      yarn start
      ```
 6. **Now you can choose how to run it**
-   - Press: - a for Android   
-           - i for ios   
-  or download the Expo Go app and scan the Qr code with your mobile phone   
+   - Press:
+      - a for Android   
+      - i for ios
+      - or download the Expo Go app and scan the Qr code with your mobile phone   
 
 8. **Now it should work :)**
