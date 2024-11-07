@@ -15,6 +15,33 @@ interface CarPopupProps {
   isVisible: boolean;
 }
 
+/**
+ * CarPopup component for displaying and editing car details.
+ *
+ * This component renders a dialog that allows users to view and edit
+ * details of a car. It uses a `Portal` to display a `Dialog` with a
+ * customizable title. The dialog contains multiple `TextField` components
+ * for editing various car attributes and a `DatePicker` for selecting
+ * the car's year.
+ *
+ * The component fetches car data based on the provided `carId` and
+ * updates the form fields accordingly. It displays a loading indicator
+ * while fetching the data. Once the data is loaded, the form fields are
+ * populated with the car details.
+ *
+ * The dialog includes "Cancel" and "Done" buttons. The "Cancel" button
+ * triggers the `cancleAction` prop, and the "Done" button triggers the
+ * `submitAction` prop with the current car data.
+ *
+ * @param {CarPopupProps} props - The props for the CarPopup component.
+ * @prop {string} title - The title of the dialog.
+ * @prop {number} [carId] - The ID of the car to fetch and display.
+ * @prop {(data: CarResponse) => void} submitAction - The function to call
+ * when the "Done" button is pressed.
+ * @prop {() => void} cancleAction - The function to call when the "Cancel"
+ * button is pressed.
+ * @prop {boolean} isVisible - Whether the dialog is visible.
+ */
 export default function CarPopup({
   title,
   carId,
@@ -36,6 +63,16 @@ export default function CarPopup({
   });
   const [isLoading, setIsLoading] = useState(true);
 
+  /**
+   * Fetches the car data from the server based on the provided `carId`
+   * and updates the component's state with the fetched data.
+   *
+   * If `carId` is null or undefined, the component's state is not
+   * updated.
+   *
+   * The function also sets the component's `isLoading` state to `false`
+   * after the data has been fetched.
+   */
   useEffect(() => {
     const fetchData = async () => {
       loginUser({
@@ -136,7 +173,7 @@ export default function CarPopup({
           )}
 
           <Dialog.Actions>
-            <Button title="Cancle" onPress={cancleAction} />
+            <Button title="Cancel" onPress={cancleAction} />
             <Button title="Done" onPress={() => submitAction(car)} />
           </Dialog.Actions>
         </Dialog>

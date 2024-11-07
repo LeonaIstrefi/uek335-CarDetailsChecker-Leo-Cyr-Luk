@@ -2,6 +2,13 @@ import * as React from "react";
 import { View, StyleSheet, Image, StatusBar } from "react-native";
 import { Text, Card } from "react-native-paper";
 
+/**
+ * The App component renders the landing page of the application.
+ *
+ * The component displays the logo of CarCrux Industries and a welcome message.
+ * The logo is displayed in the center of the screen, with the welcome message
+ * below the logo. The component also renders a status bar with a dark theme.
+ */
 export default function App() {
   return (
     <View style={styles.container}>

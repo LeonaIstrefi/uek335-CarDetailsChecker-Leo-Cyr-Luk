@@ -10,6 +10,15 @@ import DatePicker from "../components/DatePicker";
 import { getCurrentUser, loginUser, putUser } from "../service/UserService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+/**
+ * A screen to display and edit the user's profile information.
+ *
+ * The information is fetched from the API and stored in the component state.
+ * The user can edit the information and save it to the API.
+ *
+ * @function Profile
+ * @returns {React.ReactElement} A JSX element representing the Profile screen.
+ */
 function Profile() {
   const [originalFirstName, setOriginalFirstName] = React.useState("");
   const [originalLastName, setOriginalLastName] = React.useState("");
@@ -27,7 +36,6 @@ function Profile() {
   const loadProfileData = async () => {
     try {
       const id = await AsyncStorage.getItem("id");
-      console.log("User ID from AsyncStorage:", id);
 
       if (!id) {
         throw new Error("No user ID found in AsyncStorage");
@@ -35,10 +43,8 @@ function Profile() {
 
       const response = await getCurrentUser();
       const rawResponse = response.request._response;
-      console.log("Raw response:", rawResponse);
 
       const parsedData = JSON.parse(rawResponse);
-      console.log("Parsed user data:", parsedData);
 
       if (parsedData) {
         setOriginalFirstName(parsedData.firstname || "");
@@ -51,11 +57,8 @@ function Profile() {
         setBirthday(parsedData.birthday || "");
         setEmail(parsedData.email || "");
       } else {
-        console.error("No user data returned after parsing");
       }
-    } catch (error) {
-      console.error("Error loading profile data:", error);
-    }
+    } catch (error) {}
   };
 
   const handleSave = async () => {
@@ -67,10 +70,7 @@ function Profile() {
         birthday: birthday,
         password: "",
       });
-      console.log("Profile updated successfully");
-    } catch (error) {
-      console.error("Error updating profile:", error);
-    }
+    } catch (error) {}
   };
 
   const handleCancel = () => {
@@ -98,7 +98,6 @@ function Profile() {
           <Button
             title="Log Out"
             onPress={async () => {
-              console.log("Logged out");
               await AsyncStorage.removeItem("token");
             }}
           />

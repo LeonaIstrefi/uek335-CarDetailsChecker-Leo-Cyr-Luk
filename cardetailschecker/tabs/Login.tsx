@@ -6,9 +6,31 @@ import { Button } from "../components/Button";
 import { LoginRequest, loginUser } from "../service/UserService";
 import { useAuth } from "../context/AuthenticationContext";
 
+/**
+ * The Login component renders the login screen.
+ *
+ * This component allows users to log in by entering their email and password.
+ * It includes input fields for email and password, and a button to submit the
+ * login credentials. It utilizes the {@link useAuth} hook to manage
+ * authentication state and the {@link loginUser} function to validate
+ * credentials. If the login is successful, the user is marked as authenticated.
+ * The component also provides a link to navigate to the registration screen
+ * for users who do not have an account.
+ *
+ * @param {object} navigation - The navigation object to navigate between
+ * screens.
+ */
 export function Login({ navigation }) {
   const { isAuthenticated, setIsAuthenticated } = useAuth();
 
+  /**
+   * Handle the login action.
+   *
+   * This function is called when the user tries to log in.
+   * It will call the {@link loginUser} function to validate the user's
+   * credentials. If the credentials are valid, it will set the
+   * {@link isAuthenticated} state to `true`.
+   */
   const handleLogin = async () => {
     try {
       const credentials: LoginRequest = {
@@ -18,11 +40,8 @@ export function Login({ navigation }) {
       const response = await loginUser(credentials);
       if (response) {
         setIsAuthenticated(true);
-        console.log(isAuthenticated);
       }
-    } catch (error) {
-      console.error("Login error:", error);
-    }
+    } catch (error) {}
   };
   const theme = useTheme();
   const [email, setEmail] = useState("");

@@ -35,6 +35,13 @@ export const loginUser = async (credentials: LoginRequest) => {
   return token.data;
 };
 
+/**
+ * Registers a user with the server.
+ *
+ * This function takes a `User` object and submits it to the server's `/register`
+ * endpoint. If the registration is successful, it returns the response data.
+ * If the registration fails, it throws the error.
+ */
 export const registerUser = async (credentials: User) => {
   try {
     const response = await axiosInstance.post<UserResponse>(
@@ -43,14 +50,20 @@ export const registerUser = async (credentials: User) => {
     );
     return response.data;
   } catch (e) {
-    console.log("Registration error:", e);
     throw e;
   }
 };
 
+/**
+ * Retrieves the current user's information from the server.
+ *
+ * This function fetches the user ID from AsyncStorage and sends a GET request
+ * to the server's `/users/{id}` endpoint to retrieve the user's details.
+ *
+ * @returns {Promise<UserResponse>} A promise that resolves to the user's data.
+ */
 export const getCurrentUser = async () => {
   const id = await AsyncStorage.getItem("id");
-  console.log("User ID from AsyncStorage:", id);
   return axiosInstance.get<UserResponse>(`/users/${id}`);
 };
 

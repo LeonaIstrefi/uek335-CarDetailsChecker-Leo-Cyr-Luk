@@ -17,20 +17,45 @@ const Tab = createMaterialBottomTabNavigator();
 
 const Stack = createStackNavigator();
 
+/**
+ * The Nav component renders the main navigation bar of the app.
+ *
+ * The navigation bar is implemented as a Material Bottom Tab Navigator from
+ * the `react-native-paper` library. It has three tabs: "Home", "Overview", and
+ * "Profile". The "Home" tab displays the home screen, the "Overview" tab
+ * displays a list of cars, and the "Profile" tab displays the user's profile
+ * information.
+ *
+ * The navigation bar is styled according to the app's theme, which is managed
+ * by the `react-native-paper` library.
+ *
+ * The navigation bar is rendered only if the user is authenticated. If the
+ * user is not authenticated, the navigation bar is replaced with a login
+ * screen.
+ *
+ * @returns {React.ReactElement} A JSX element representing the Nav component.
+ */
 export default function Nav() {
   const theme = useTheme();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
+    /**
+     * Checks if the user is authenticated.
+     *
+     * This function checks if the "accessToken" key is set in the AsyncStorage.
+     * If the key is set, it means the user is authenticated, so it sets the
+     * `isAuthenticated` state to `true`.
+     *
+     * @returns {void}
+     */
     const checkAuthentication = async () => {
       try {
         const token = await AsyncStorage.getItem("accessToken");
         if (token) {
           setIsAuthenticated(true);
         }
-      } catch (error) {
-        console.error("Failed to retrieve token:", error);
-      }
+      } catch (error) {}
     };
     checkAuthentication();
   }, []);

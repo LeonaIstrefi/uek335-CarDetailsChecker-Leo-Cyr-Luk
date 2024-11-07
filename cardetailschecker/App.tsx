@@ -13,6 +13,21 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createStackNavigator();
 
+/**
+ * The main app component.
+ *
+ * This component is responsible for rendering the entire app. It uses the
+ * {@link PaperProvider} to provide the theme to all of its children, and it
+ * uses the {@link AuthProvider} to provide authentication state to all of its
+ * children.
+ *
+ * The app renders a navigation stack with two possible states: a logged-in
+ * state and a logged-out state. When the user is logged in, the app renders the
+ * {@link Nav} component. When the user is logged out, the app renders a stack
+ * with two screens: the {@link Login} screen and the {@link Register} screen.
+ *
+ * @returns The app component.
+ */
 export default function App() {
   const currentTheme = useColorScheme();
   const theme = currentTheme === "dark" ? darkTheme : lightTheme;
@@ -23,9 +38,7 @@ export default function App() {
       try {
         const token = await AsyncStorage.getItem("token");
         setIsAuthenticated(!!token);
-      } catch (error) {
-        console.error("Failed to retrieve token:", error);
-      }
+      } catch (error) {}
     }, 1000);
 
     return () => clearInterval(intervalId);

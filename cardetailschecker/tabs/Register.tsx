@@ -5,6 +5,23 @@ import { View, StyleSheet, TouchableOpacity, Text, Image } from "react-native";
 import { Button } from "../components/Button";
 import { User, registerUser } from "../service/UserService";
 
+/**
+ * This component renders the Register screen.
+ *
+ * The Register screen takes a `navigation` prop, which is expected to be an
+ * instance of the `Stack.Navigator` component from the `@react-navigation/stack`
+ * library. The `navigation` prop is used to navigate between screens.
+ *
+ * The Register screen renders a form with fields for first name, last name,
+ * email, birthday, and password. It also renders a "Register Now" button that,
+ * when pressed, calls the `registerUser` function from the
+ * `../service/UserService` module with the values of the form fields as its
+ * argument. If the `registerUser` function resolves without error, the
+ * `navigation` prop is used to navigate to the "Login" screen.
+ *
+ * The Register screen also renders a footer with a link to the "Login" screen.
+ * The footer is styled with the `styles.footer` and `styles.linkText` styles.
+ */
 export function Register({ navigation }) {
   const handleRegister = async () => {
     try {
@@ -16,12 +33,7 @@ export function Register({ navigation }) {
         password: password,
       };
       const response = await registerUser(credentials);
-      if (response) {
-        console.log("User registered successfully:", response);
-      }
-    } catch (error) {
-      console.error("Registration error:", error);
-    }
+    } catch (error) {}
     navigation.navigate("Login");
   };
 

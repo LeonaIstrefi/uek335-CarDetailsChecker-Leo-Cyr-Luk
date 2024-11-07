@@ -9,6 +9,30 @@ interface ConfirmationProps {
   isVisible: boolean;
 }
 
+/**
+ * A confirmation dialog component.
+ *
+ * This component is a portal that renders a `Dialog` component
+ * conditionally based on the `isVisible` prop. The `Dialog` component
+ * displays a title, a message, and two buttons: "Cancel" and "Done".
+ * When the user presses the "Cancel" button, the `cancleAction` prop
+ * is called. When the user presses the "Done" button, the `submitAction`
+ * prop is called.
+ *
+ * @param {ConfirmationProps} props
+ * @prop {boolean} isVisible Whether the dialog is visible.
+ * @prop {() => void} submitAction The function to call when the user
+ * presses the "Done" button.
+ * @prop {() => void} cancleAction The function to call when the user
+ * presses the "Cancel" button.
+ *
+ * @example
+ * <Confirmation
+ *   isVisible={true}
+ *   submitAction={() => console.log("User confirmed!")}
+ *   cancleAction={() => console.log("User cancelled!")}
+ * />
+ */
 const Confirmation = ({
   isVisible,
   submitAction,
@@ -22,7 +46,7 @@ const Confirmation = ({
           <Text variant="bodyMedium">This action is irreversible!</Text>
         </Dialog.Content>
         <Dialog.Actions>
-          <Button title="Cancle" onPress={cancleAction} />
+          <Button title="Cancel" onPress={cancleAction} />
           <Button title="Done" onPress={submitAction} />
         </Dialog.Actions>
       </Dialog>
